@@ -1,6 +1,6 @@
 package evaluation;
 
-// °­ÀÇ Æò°¡¿Í °ü·ÃµÈ µðºñ¿¡ ÀûÁ¢ÀûÀ¸·Î Á¢±ÙÇÏ´Â °´Ã¼
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ò°¡¿ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼
 
 import java.sql.Connection;
 
@@ -30,7 +30,7 @@ public class EvaluationDAO {
 
 			String dbID = "root";
 
-			String dbPassword = "5826";
+			String dbPassword = "****";
 
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -47,17 +47,17 @@ public class EvaluationDAO {
 	
 
 	public int write(EvaluationDTO evaluationDTO) {
-		// ±Û¾²±â Ç×¸ñ
-		// »ç¿ëÀÚ°¡ ÇÑ°³ÀÇ °­ÀÇÁ¤º¸¸¦ ±â·ÏÇÒ¼ö ÀÖµµ·Ï ÇØÁÜ
+		// ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
+		// ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ñ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		PreparedStatement pstmt = null;
 
 		try {
 
 			String SQL = "INSERT INTO EVALUATION VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0);";
-			// ID °ªÀÌ auto_increment·Î µÇ¾îÀÖ±â¶§¹®¿¡
-			// NULL°ªÀ» ³Ö¾îÁÖ¸é Â÷·Ê·Î 1¾¿ Áõ°¡ÇÒ¼öÀÖÀ½
-			// likey´Â µðÆúÆ®°ªÀÌ 0ÀÓ
+			// ID ï¿½ï¿½ï¿½ï¿½ auto_incrementï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö±â¶§ï¿½ï¿½ï¿½ï¿½
+			// NULLï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ï¿½Ê·ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½
+			// likeyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½
 			pstmt = conn.prepareStatement(SQL);
 
 			pstmt.setString(1, evaluationDTO.getUserID());

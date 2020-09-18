@@ -18,7 +18,7 @@ public class SHA256 {
 
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
-			byte[] salt = "Hello! This is Salt.".getBytes();
+			byte[] salt = "***".getBytes();
 
 			digest.reset();
 
