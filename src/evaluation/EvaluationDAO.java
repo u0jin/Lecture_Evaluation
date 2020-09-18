@@ -26,7 +26,7 @@ public class EvaluationDAO {
 
 		try {
 
-			String dbURL = "jdbc:mysql://localhost:3306/Lecture";
+			String dbURL = "jdbc:mysql://localhost:3306/LectureEvaluation?useUnicode=true&characterEncoding=UTF-8";
 
 			String dbID = "root";
 
