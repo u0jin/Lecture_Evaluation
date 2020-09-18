@@ -1,7 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter"%>
+<%@ page import="user.UserDAO"%>
+
+<!doctype html>
+
 <html>
+
   <head>
 
     <title>강의평가 웹 사이트</title>
@@ -21,6 +25,53 @@
   </head>
 
   <body>
+  
+  <%
+
+	String userID = null;
+
+	if(session.getAttribute("userID") != null) {
+
+		userID = (String) session.getAttribute("userID");
+
+	}
+
+	if(userID == null) {
+
+		PrintWriter script = response.getWriter();
+
+		script.println("<script>");
+
+		script.println("alert('로그인을 해주세요.');");
+
+		script.println("location.href = 'userLogin.jsp'");
+
+		script.println("</script>");
+
+		script.close();	
+
+	}
+
+	boolean emailChecked = new UserDAO().getUserEmailChecked(userID);
+	// 이메일 인증을 받았는지
+
+	if(emailChecked == false) { // 인증을 못받은사람
+
+		PrintWriter script = response.getWriter();
+
+		script.println("<script>");
+
+		script.println("location.href = 'emailSendConfirm.jsp'");
+
+		script.println("</script>");
+
+		script.close();		
+
+		return;
+
+	}
+
+%>	
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -50,19 +101,38 @@
 
             </a>
 
-            <div class="dropdown-menu" aria-labelledby="dropdown">
+           <div class="dropdown-menu" aria-labelledby="dropdown">
+<%-- 로그인이 된 상태라면 회원가입과 로그인은 보이면 안되니까  --%>
+<%
+
+	if(userID == null) {
+
+%>
 
               <a class="dropdown-item" href="userLogin.jsp">로그인</a>
 
               <a class="dropdown-item" href="userRegister.jsp">회원가입</a>
 
+<%
+
+	} else {
+
+%>
+
               <a class="dropdown-item" href="userLogout.jsp">로그아웃</a>
+
+<%
+
+	}
+
+%>
 
             </div>
 
           </li>
 
         </ul>
+
         <form action="./index.jsp" method="get" class="form-inline my-2 my-lg-0">
 
           <input type="text" name="search" class="form-control mr-sm-2" placeholder="내용을 입력하세요.">
@@ -107,6 +177,62 @@
 
           <div class="row">
 
+            <div class="col-8 text-left">컴퓨터개론&nbsp;<small>나동빈</small></div>
+
+            <div class="col-4 text-right">
+
+              종합 <span style="color: red;">A</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card-body">
+
+          <h5 class="card-title">
+
+            정말 좋은 강의에요.&nbsp;<small>(2017년 가을학기)</small>
+
+          </h5>
+
+          <p class="card-text">강의가 많이 널널해서, 솔직히 많이 배운 건 없는 것 같지만 학점도 잘 나오고 너무 좋은 것 같습니다.</p>
+
+          <div class="row">
+
+            <div class="col-9 text-left">
+
+              성적 <span style="color: red;">A</span>
+
+              널널 <span style="color: red;">A</span>
+
+              강의 <span style="color: red;">B</span>
+
+              <span style="color: green;">(추천: 15★)</span>
+
+            </div>
+
+            <div class="col-3 text-right">
+
+              <a onclick="return confirm('추천하시겠습니까?')" href="./likeAction.jsp?evaluationID=">추천</a>
+
+              <a onclick="return confirm('삭제하시겠습니까?')" href="./deleteAction.jsp?evaluationID=">삭제</a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card bg-light mt-3">
+
+        <div class="card-header bg-light">
+
+          <div class="row">
+
             <div class="col-8 text-left">컴퓨터그래픽스&nbsp;<small>홍길동</small></div>
 
             <div class="col-4 text-right">
@@ -135,7 +261,7 @@
 
               성적 <span style="color: red;">B</span>
 
-              여유 <span style="color: red;">C</span>
+              널널 <span style="color: red;">C</span>
 
               강의 <span style="color: red;">B</span>
 
@@ -191,7 +317,7 @@
 
               성적 <span style="color: red;">A</span>
 
-              여유 <span style="color: red;">C</span>
+              널널 <span style="color: red;">C</span>
 
               강의 <span style="color: red;">A</span>
 
@@ -295,28 +421,17 @@
 
                     <option value="2017">2017</option>
 
-                    <option value="2018">2018</option>
+                    <option value="2018" selected>2018</option>
 
                     <option value="2019">2019</option>
 
-                    <option value="2020" selected>2020</option>
+                    <option value="2020">2020</option>
 
                     <option value="2021">2021</option>
 
                     <option value="2022">2022</option>
 
                     <option value="2023">2023</option>
-                    
-                    <option value="2024">2024</option>
-                    
-                    <option value="2025">2025</option>
-                    
-                    <option value="2026">2026</option>
-                    
-                    <option value="2027">2027</option>
-                    
-                    <option value="2028">2028</option>
-                    
 
                   </select>
 
@@ -328,11 +443,11 @@
 
                   <select name="semesterDivide" class="form-control">
 
-                    <option name="1학기">1학기</option>
+                    <option name="1학기" selected>1학기</option>
 
                     <option name="여름학기">여름학기</option>
 
-                    <option name="2학기" selected>2학기</option>
+                    <option name="2학기">2학기</option>
 
                     <option name="겨울학기">겨울학기</option>
 
@@ -418,7 +533,7 @@
 
                 <div class="form-group col-sm-3">
 
-                  <label>여유</label>
+                  <label>널널</label>
 
                   <select name="comfortableScore" class="form-control">
 
@@ -534,7 +649,7 @@
 
     <footer class="bg-dark mt-4 p-5 text-center" style="color: #FFFFFF;">
 
-      Copyright ⓒ 2020  YJ All Rights Reserved.
+      Copyright ⓒ 2018 김유진 All Rights Reserved.
 
     </footer>
 
@@ -544,7 +659,7 @@
 
     <!-- Popper 자바스크립트 추가하기 -->
 
-    <script src="./js/popper.js"></script>
+    <script src="./js/popper.min.js"></script>
 
     <!-- 부트스트랩 자바스크립트 추가하기 -->
 
@@ -553,3 +668,4 @@
   </body>
 
 </html>
+
